@@ -1,0 +1,35 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'idea'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+
+    maven { url "http://repo.spring.io/plugins-release/" }
+}
+
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    testCompile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
+    testCompile "org.spockframework:spock-core:1.2-groovy-2.4"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'com.athaydes:spock-reports:1.6.1', { transitive = false }
+
+    // https://mvnrepository.com/artifact/com.github.grooviter/gql-core
+    compile group: 'com.github.grooviter', name: 'gql-core', version: '0.2.0'
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+
+    // https://mvnrepository.com/artifact/com.graphql-java/graphql-java
+    compile group: 'com.graphql-java', name: 'graphql-java', version: '1.2'
+    compile 'com.graphql-java:graphql-java:2019-03-10T22-41-06-9808185'
+}
+
