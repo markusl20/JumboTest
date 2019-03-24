@@ -2,6 +2,7 @@ import graphql.execution.Execution
 import graphql.schema.GraphQLList
 import groovy.json.JsonSlurper
 import groovyx.net.http.RESTClient
+import org.apache.http.client.HttpResponseException
 import spock.lang.Specification
 import spock.lang.Unroll
 import java.sql.Timestamp
@@ -11,6 +12,20 @@ import static groovyx.net.http.ContentType.JSON
 
 class Globals{
     static String api_key = ''
+
+    //pet
+    static int petId  = 868686
+    static String status = 'available'
+    static String name = 'unidog'
+
+    //category
+    static int categoryId  = 868686
+    static String categoryName  = 'unicorn'
+
+    //tag
+    static int tagId = 0
+    static String tagName = 'string'
+
 }
 
 class OptimiseTest extends Specification {
@@ -20,26 +35,25 @@ class OptimiseTest extends Specification {
         return super.toString()
     }
 
-    def 'Find pet by ID'() {
+      def 'Find pet by ID'() {
 
         given:
-        int petId = 2
-        String petName = 'Tinku'
-        String petCategorName = 'German Shepard'
-        String testURL = 'https://petstore.swagger.io/v2/pet/' + petId.toString()
+        int localPetId = Globals.petId
+        String petName = Globals.name
+        String petCategoryName = Globals.categoryName
+        String testURL = 'https://petstore.swagger.io/v2/pet/' + Globals.petId
         int expectedResponse = 200
 
         RESTClient restClient = new RESTClient(testURL, JSON)
 
         when:
-        //def response = restClient.post(path: '//pet', body: jsonObj, headers: [ Accept: 'application/json'])
         def response = restClient.get(headers: [ Accept: 'application/json'])
 
         then:
         response.status == expectedResponse
-        ((Map) response.data).id == petId
+        ((Map) response.data).id == localPetId
         ((Map) response.data).name == petName
-        ((Map) response.data).category.name == petCategorName
+        ((Map) response.data).category.name == petCategoryName
     }
 
 
